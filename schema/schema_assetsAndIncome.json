@@ -1,0 +1,127 @@
+{
+    "assetsAndIncome": {
+        "type": "object",
+        "properties": {
+            "bankableAssets": {
+                "type": "string",
+                "description": "Calculate the total value of the $_var_individual bankable assets.",
+                "example": "CHF 5'000'000.00",
+                "displayName": "Bankable assets"
+            },
+            "bankableAssetsComments": {
+                "type": "string",
+                "description": "Comments on bankable assets from $_var_individual, including the bank where the assets are located.",
+                "example": "CHF 5'000'000.00 in UBS",
+                "displayName": "Bankable assets comments"
+            },
+            "realEstate": {
+                "type": "string",
+                "description": "Calculate the total value of real estate assets from $_var_individual.",
+                "example": "CHF 2'000'000.00",
+                "displayName": "Real estate"
+            },
+            "realEstateComments": {
+                "type": "string",
+                "description": "Comments on real estate assets, including the location and the value of the real estate of $_var_individual.",
+                "example": "Luxury apartment in Zurich, CHF 2'000'000.00",
+                "displayName": "Real estate comments"
+            },
+            "privateEquityOwnBusiness": {
+                "type": "string",
+                "description": "Calculate the total value of private equity or own business of $_var_individual.",
+                "example": "CHF 3'000'000.00",
+                "displayName": "Private equity / own business"
+            },
+            "privateEquityOwnBusinessComments": {
+                "type": "string",
+                "description": "Comments on private equity or own business from $_var_individual.",
+                "example": "Includes shares in privately held companies.",
+                "displayName": "Private equity / own business comments"
+            },
+            "otherAssets": {
+                "type": "string",
+                "description": "Calculate the total value of other assets from $_var_individual.",
+                "example": "CHF 1'000'000.00",
+                "displayName": "Other assets"
+            },
+            "otherAssetsComments": {
+                "type": "string",
+                "description": "Comments on other assets of $_var_individual.",
+                "example": "Includes collectibles and other investments.",
+                "displayName": "Other assets comments"
+            },
+            "loanMortgage": {
+                "type": "string",
+                "description": "Total value of outstanding loans or mortgages from $_var_individual.",
+                "example": "CHF 500'000.00",
+                "displayName": "Loan, mortgage"
+            },
+            "loanMortgageComments": {
+                "type": "string",
+                "description": "Comments on outstanding loan or mortgage from $_var_individual.",
+                "example": "Mortgage on primary residence.",
+                "displayName": "Loan, mortgage comments"
+            },
+            "salaryFromEmployment": {
+                "type": "string",
+                "description": "Total salary from employment (inclusive of bonus) from $_var_individual.",
+                "example": "CHF 150'000.00",
+                "displayName": "Salary from employment (inclusive of bonus)"
+            },
+            "salaryFromEmploymentComments": {
+                "type": "string",
+                "description": "Comments on salary from employment from $_var_individual.",
+                "example": "Includes annual bonus.",
+                "displayName": "Salary from employment (inclusive of bonus) comments"
+            },
+            "directorsFeeDividends": {
+                "type": "string",
+                "description": "Director's fee or dividends from shareholdings from $_var_individual.",
+                "example": "CHF 50'000.00",
+                "displayName": "Director's fee/dividends from shareholdings"
+            },
+            "directorsFeeDividendsComments": {
+                "type": "string",
+                "description": "Comments on director's fee or dividends from $_var_individual.",
+                "example": "Dividends from company shares.",
+                "displayName": "Director's fee/dividends from shareholdings comments"
+            },
+            "incomeFromBankableAssets": {
+                "type": "string",
+                "description": "Income from bankable assets from $_var_individual.",
+                "example": "CHF 20'000.00",
+                "displayName": "Income from bankable assets"
+            },
+            "incomeFromBankableAssetsComments": {
+                "type": "string",
+                "description": "Comments on income from bankable assets from $_var_individual.",
+                "example": "Interest and dividends from investments.",
+                "displayName": "Income from bankable assets comments"
+            },
+            "rentalIncome": {
+                "type": "string",
+                "description": "Rental income from $_var_individual.",
+                "example": "CHF 60'000.00",
+                "displayName": "Rental income"
+            },
+            "rentalIncomeComments": {
+                "type": "string",
+                "description": "Comments on rental income from $_var_individual.",
+                "example": "Income from rental properties.",
+                "displayName": "Rental income comments"
+            },
+            "otherIncome": {
+                "type": "string",
+                "description": "Any other income from $_var_individual that is not income from employment, director's fees, bankable assets, or rental income.",
+                "example": "CHF 10'000.00",
+                "displayName": "Other Income"
+            },
+            "otherIncomeComments": {
+                "type": "string",
+                "description": "Describe any other income from $_var_individual that is not income from employment, director's fees, bankable assets, or rental income. that $_var_individual receives.",
+                "example": "Income from consulting services.",
+                "displayName": "Other Income Comments"
+            }
+        }
+    }
+}

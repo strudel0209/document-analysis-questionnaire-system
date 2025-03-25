@@ -1,0 +1,6 @@
+semantic-kernel
+pydantic
+openai
+azure-ai-documentintelligence
+azure-core
+python-dotenv
