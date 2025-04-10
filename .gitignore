@@ -1,10 +1,13 @@
 # Environment variables and credentials
 .env
+.devcontainer/
 
 # Processed documents and data
 *_backup.json
 processed_documents/
 anonymized_examples/
+test_document.py
+generate_architecture_diagram.py
 
 # Python
 __pycache__/
