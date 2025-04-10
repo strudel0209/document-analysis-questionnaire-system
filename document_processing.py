@@ -3,6 +3,7 @@ import json
 from azure.core.exceptions import HttpResponseError
 from dotenv import load_dotenv
 from azure.core.credentials import AzureKeyCredential
+from azure.core.pipeline.transport import RequestsTransport
 from azure.ai.documentintelligence import DocumentIntelligenceClient
 from azure.ai.documentintelligence.models import DocumentContentFormat, AnalyzeResult
 from openai import AzureOpenAI
@@ -22,7 +23,7 @@ api_version = os.environ["AZURE_OPENAI_API_VERSION"]
 def analyze_local_document_to_markdown(file_path):
     """Process a local PDF file and convert to markdown format."""
     
-    document_intelligence_client = DocumentIntelligenceClient(endpoint=endpoint, credential=AzureKeyCredential(key))
+    document_intelligence_client = DocumentIntelligenceClient(endpoint=endpoint, credential=AzureKeyCredential(key), transport=RequestsTransport(connection_timeout=600.0, read_timeout=600.0))
     
     # Open and read the local file
     with open(file_path, "rb") as f:
