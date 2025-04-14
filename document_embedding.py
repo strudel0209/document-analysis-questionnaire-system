@@ -4,6 +4,8 @@ import numpy as np
 from typing import List, Dict, Any
 from openai import AzureOpenAI
 from dotenv import load_dotenv
+from numpy import dot
+from numpy.linalg import norm
 
 load_dotenv()
 
@@ -103,7 +105,7 @@ def vector_similarity(vec1: List[float], vec2: List[float]) -> float:
     vec2 = np.array(vec2)
     return np.dot(vec1, vec2) / (np.linalg.norm(vec1) * np.linalg.norm(vec2))
 
-def retrieve_relevant_chunks(query: str, document_index: List[Dict], top_k: int = 3) -> List[Dict]:
+def retrieve_relevant_chunks(query: str, document_index: List[Dict], top_k: int = 5) -> List[Dict]:
     """Retrieve most relevant chunks using semantic similarity."""
     client = AzureOpenAI(
         api_key=aoai_key,
@@ -113,6 +115,10 @@ def retrieve_relevant_chunks(query: str, document_index: List[Dict], top_k: int 
     
     # Create query embedding
     query_embedding = create_embeddings(query, client)
+    # query_embedding = client.embeddings.create(
+    #     input=query,
+    #     model=os.environ[embedding_deployment]
+    # ).data[0].embedding    
     
     all_chunks = []
     
@@ -145,4 +151,4 @@ def retrieve_relevant_chunks(query: str, document_index: List[Dict], top_k: int 
     
     # Sort chunks by similarity and return top_k
     sorted_chunks = sorted(all_chunks, key=lambda x: x["similarity"], reverse=True)
-    return sorted_chunks[:top_k]   # default to top 3
+    return sorted_chunks[:top_k]   # default to top 5

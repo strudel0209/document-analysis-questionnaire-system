@@ -8,6 +8,7 @@ processed_documents/
 anonymized_examples/
 test_document.py
 generate_architecture_diagram.py
+Hans_Muster_form_answers.json
 
 # Python
 __pycache__/

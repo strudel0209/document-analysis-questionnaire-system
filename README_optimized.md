@@ -5,67 +5,60 @@ This document outlines the improvements made to the original Document Analysis a
 ## Key Improvements
 
 ### 1. Optimized Token Usage
-- **Chunk strategies and embedd chunks**
-    - chunk the document in chunks of 500 char with 50 overlapping chars
-    - embedd using `text-embedding-ada-002`
-- **Shared Context for Related Questions:**
-  - Introduced a mechanism to group related questions and reuse document chunks, reducing redundant embedding calls.
-  - Cached relevant document chunks for subsequent questions in the same group.
+- **Controlled Document Chunking:**
+  - Document chunks are truncated to a maximum defined size (e.g., 1500 characters) with limits on the number of chunks processed per call.
+  - This approach reduces the amount of token consumption per API call.
+- **Efficient Embedding Operations:**
+  - By restricting the number of documents processed (e.g., to a maximum of 10) and reducing per-document chunks, redundant embedding calls are minimized.
 
 ### 2. Streamlined Agent Interactions
-- **Simplified Agent Setup:**
-  - Created a single combined agent (`AgentGroupChat`) for complex questions, reducing the overhead of managing multiple agents.
-  - Limited the number of iterations for agent responses to save tokens.
-- **Improved Validation Process:**
-  - Enhanced the `Validator` agent to provide concise feedback and validate answers in fewer steps.
+- **Fresh Chat Instances Per Question:**
+  - Instead of attempting to reset existing agent chats (which can lead to state issues), a fresh chat instance is created for each question or question group.
+  - This approach avoids errors such as "Unable to proceed while another agent is active" and ensures a clean state with each interaction.
+- **Limited Iterations:**
+  - The number of conversation iterations is limited (e.g., to 3) to further reduce token usage.
+- **Simplified and Concise Prompts:**
+  - Prompts for the agents have been shortened and made more direct to minimize unnecessary token consumption.
 
 ### 3. Enhanced Context Sharing
 - **Grouped Questions:**
-  - Grouped related questions based on field names to share context and avoid redundant processing.
-  - Used shared context to answer multiple questions efficiently.
-- **Efficient Document Chunking:**
-  - Cached document chunks for reuse across related questions, reducing the need for repeated document retrieval and embedding generation.
-
+  - Related questions are grouped using a dedicated mechanism (via the `group_related_questions` function) which allows sharing of context and relevant document chunks.
+  - This reduces redundant processing since similar questions reuse document retrieval results.
+- **Minimized Reset Overhead:**
+  - Instead of resetting chats repeatedly, new agent chats are instantiated per question group, leading to cleaner and more reliable state management.
 
 ## Updated Architecture
 
-The updated architecture focuses on efficient token usage, streamlined agent interactions, and embedding-based document processing. Below is a diagram illustrating the optimized approach:
+The updated architecture diagram is shown below:
 
 ![Optimized Architecture Diagram](optimized_architecture.jpg)
 
-### Key Changes in the Architecture
+The updated architecture focuses on efficient token usage, streamlined agent interactions, and embedding-based document processing. Key elements include:
 
 1. **Document Embedding Process:**
-   - Documents are chunked into smaller sections (500 characters with 50 overlapping characters).
-   - Each chunk is embedded using the `text-embedding-ada-002` model.
-   - Embeddings are cached and reused for related questions to reduce redundant processing.
+   - Documents are chunked with strict limits on size and number.
+   - Embeddings are generated once and reused for related questions, reducing redundant operations.
 
-2. **Combined Agent for Complex Questions:**
-   - A single `AgentGroupChat` is used for complex questions.
-   - Includes two sub-agents:
-     - **Financial Expert Agent:** Extracts and formats answers based on the provided context.
-     - **Validator Agent:** Validates the answers for accuracy and formatting.
-   - Reduces the overhead of managing multiple specialized agents.
+2. **Dynamic Agent Chat Creation:**
+   - A fresh agent chat (`AgentGroupChat`) is created for each question or group of related questions instead of attempting internal resets.
+   - This design choice simplifies state handling and avoids errors during chat resets.
 
-3. **Document Retriever Agent:**
-   - Retrieves relevant document chunks based on the embeddings.
-   - Uses cached embeddings to improve efficiency and reduce token usage.
-
-4. **Shared Context for Related Questions:**
-   - Groups related questions to share context and avoid redundant processing.
-   - Uses cached document chunks for subsequent questions in the same group.
+3. **Shared Context for Related Questions:**
+   - Grouping related questions ensures that context and document chunks are effectively reused, minimizing the need for repeated token-intensive operations.
 
 ## Benefits of the Optimized System
-- **Reduced Costs:**
-  - Lower token usage leads to reduced operational costs.
+- **Reduced Operational Costs:**
+  - Lower token usage translates to lower costs.
 - **Improved Efficiency:**
-  - Faster response times due to shared context and streamlined agent interactions.
+  - Quick response times are achieved by limiting iterations and ensuring each agent operates within a clean state.
+- **Enhanced Reliability:**
+  - Fresh chat instantiation avoids reset-related errors and state conflicts.
 - **Maintained Accuracy:**
-  - Ensures high-quality answers with accurate validation and formatting.
+  - Despite the token and iteration limitations, careful grouping and context sharing ensure accurate responses.
 
 ## Limitations
-- The system is still optimized primarily for financial documents.
-- Complex layouts may require additional processing steps.
+- The system is fine-tuned for handling financial documents; additional optimizations may be necessary for other document types.
+- Specific document layouts could require further adjustments to the chunking strategy.
 
 ## How to Use the Optimized System
 
@@ -129,4 +122,4 @@ The system uses JSON schema files to define questions and answer formats. Here's
 ```
 
 ## Summary
-The optimized system significantly reduces token usage while maintaining the accuracy and quality of responses. By leveraging shared context, streamlined agent interactions, and efficient document processing, the system achieves better performance and cost efficiency.
+The optimized system implements controlled document chunking, fresh agent chat instantiation, and grouped question processing to reduce TPM usage while maintaining high-quality and accurate responses. This results in faster, more reliable performance and reduced operational costs.
